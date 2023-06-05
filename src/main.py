@@ -49,14 +49,14 @@ def main():
         font20 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 20)
         font22 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 22)
         font24 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 24)
-        font35 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 35)
+        font36 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 36)
 
         # Draw the METAR weather
         # KALN 051950Z 03009KT 10SM CLR 28/05 A3001
         metar_wx = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(metar_wx)
-        draw.text((10, 0), "KALN", font=font35, fill=0)
-        draw.text((10, 40), "051950Z 03009KT 10SM CLR 28/05 A3001", font=font22, fill=0)
+        draw.text((10, 0), "KALN", font=font36, fill=0)
+        draw.text((10, 40), "051950Z 03009KT 10SM CLR 28/05 A3001", font=font18, fill=0)
         draw.text((10, 65), "Date / Time: June 5, 1450LCL", font=font18, fill=0)
         draw.text((10, 90), "Winds: NE at 9KTS", font=font22, fill=0)
         draw.text((10, 115), "Vis: 10SM", font=font22, fill=0)
