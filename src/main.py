@@ -16,8 +16,12 @@ picdir = ""
 libdir = ""
 
 try:
-    picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
-    libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
+    picdir = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "pic"
+    )
+    libdir = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "lib"
+    )
 
     if os.path.exists(libdir):
         sys.path.append(libdir)
@@ -26,12 +30,15 @@ try:
 
     logging.basicConfig(level=logging.DEBUG)
 except ImportError as ie:
+    print(f"{ie}")
     sys.exit()
-
+else:
+    print("Imports success")
 
 
 def main():
+    print("Hello world")
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
