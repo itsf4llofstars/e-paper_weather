@@ -50,11 +50,19 @@ def main():
         font35 = ImageFont.truetype(os.path.join(picdir, "Font.ttc"), 35)
 
         # Draw the METAR weather
+        # KALN 051950Z 03009KT 10SM CLR 28/05 A3001
         metar_wx = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(metar_wx)
-        draw.text((10, 0), "hello world", font=font24, fill=0)
+        draw.text((10, 0), "KALN", font=font35, fill=0)
+        draw.text((10, 40), "051950Z 03009KT 10SM CLR 28/05 A3001", font=font18, fill=0)
+        draw.text((10, 65), "Date / Time: June 5, 1450LCL", font=font18, fill=0)
+        draw.text((10, 90), "Winds: NE at 9KTS", font=font18, fill=0)
+        draw.text((10, 115), "Vis: 10SM", font=font18, fill=0)
+        draw.text((10, 140), "Sky: CLEAR", font=font18, fill=0)
+        draw.text((10, 165), "Temp: 28C - 86F", font=font18, fill=0)
+        draw.text((10, 190), "Baro: 30.02 in/Hg", font=font18, fill=0)
         epd.display(epd.getbuffer(metar_wx))
-        time.sleep(2)
+        time.sleep(5)
 
         epd.Clear()
         epd.sleep()
