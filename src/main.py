@@ -36,7 +36,22 @@ else:
     print("Imports success")
 
 
+def get_metar(filename) -> str:
+    metar = ""
+    try:
+        with open(filename) as read:
+            metars = read.readlines()
+    except FileNotFoundError as fnfe:
+        print(f"{fnfe}")
+    else:
+        metar = metars[-1]
+    finally:
+        if metar is not None:
+            return metar
+
+
 def main():
+    """
     try:
         epd = epd4in2.EPD()
 
@@ -79,6 +94,7 @@ def main():
         logging.info("ctrl + c:")
         epd4in2.epdconfig.module_exit()
         exit()
+        """
 
 
 if __name__ == "__main__":
