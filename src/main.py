@@ -38,10 +38,14 @@ else:
 
 def main():
     try:
-        logging.info("epd4in2 Demo")
-
         epd = epd4in2.EPD()
-        logging.info("init and Clear")
+
+        if sys.argv[1] == "-c":
+            epd.init()
+            epd.Clear()
+            epd.sleep()
+            sys.exit()
+
         epd.init()
         epd.Clear()
 
