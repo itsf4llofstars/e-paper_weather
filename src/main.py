@@ -40,7 +40,7 @@ def main():
     try:
         epd = epd4in2.EPD()
 
-        if sys.argv[1] == "-c":
+        if len(sys.argv) == 2 and sys.argv[1] == "-c":
             epd.init()
             epd.Clear()
             epd.sleep()
@@ -67,6 +67,7 @@ def main():
         draw.text((10, 140), "Sky: CLEAR", font=font22, fill=0)
         draw.text((10, 165), "Temp: 28C - 86F", font=font22, fill=0)
         draw.text((10, 190), "Baro: 30.02 in/Hg", font=font22, fill=0)
+        draw.text((10, 215), "xxx\nxxx", font=font18, fill=0)
         epd.display(epd.getbuffer(metar_wx))
         time.sleep(5)
 
