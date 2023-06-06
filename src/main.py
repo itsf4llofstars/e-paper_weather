@@ -61,7 +61,7 @@ def get_day_time(metar):
 def get_winds(metar):
     winds = re.compile(r"\s\d{5}(G\d{2})?KT\s")
     wind_dir_sp = re.search(winds, metar)
-    print(wind_dir_sp.group())
+    return wind_dir_sp.group()
 
 
 def main():
@@ -69,14 +69,15 @@ def main():
     curr_metar = get_metar(metar_file)
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
-    get_winds("KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999")
+    winds = get_winds(curr_metar)
 
     # KALN 060050Z 36003KT 10SM CLR 24/08 A2999
     # KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999
 
-    # print(f"{station}")
-    # print(f"{curr_metar}")
-    # print(f"{day_time}")
+    print(f"{station}")
+    print(f"{curr_metar}")
+    print(f"{day_time}")
+    print(f"{winds}")
 
     epd = epd4in2.EPD()
     if len(sys.argv) == 2 and sys.argv[1] == "-c":
