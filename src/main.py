@@ -55,6 +55,7 @@ def main():
     )
     curr_metar = get_metar(metar_file)
     # curr_metar = "060050Z 18015KT 10SM CLR 24/08 A2999"
+    station = curr_metar[:4]
 
     try:
         epd = epd4in2.EPD()
@@ -78,7 +79,7 @@ def main():
         # KALN 051950Z 03009KT 10SM CLR 28/05 A3001
         metar_wx = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(metar_wx)
-        draw.text((10, 0), curr_metar, font=font22, fill=0)
+        draw.text((10, 0), station, font=font36, fill=0)
         epd.display(epd.getbuffer(metar_wx))
 
         # epd.Clear()
