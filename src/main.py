@@ -6,6 +6,7 @@ Description: Weather text and ascii displayd on e-paper
 """
 import logging
 import os
+import re
 import sys
 # import time
 # import traceback
@@ -32,8 +33,6 @@ try:
 except ImportError as ie:
     print(f"{ie}")
     sys.exit()
-else:
-    print("Imports success")
 
 
 def get_metar(filename) -> str:
@@ -59,18 +58,25 @@ def get_day_time(metar):
     return metar[5:12]
 
 
+def get_winds(metar):
+    winds = re.compile(r"\s\d{5}(G\d{2})?KT\s")
+    wind_dir_sp = re.search(winds, metar)
+    print(wind_dir_sp.group())
+
+
 def main():
     metar_file = os.path.expanduser(os.path.join("~", "python", "metar_parser", "metar.txt"))
     curr_metar = get_metar(metar_file)
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
+    get_winds("KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999")
 
     # KALN 060050Z 36003KT 10SM CLR 24/08 A2999
     # KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999
 
-    print(f"{station}")
-    print(f"{curr_metar}")
-    print(f"{day_time}")
+    # print(f"{station}")
+    # print(f"{curr_metar}")
+    # print(f"{day_time}")
 
     epd = epd4in2.EPD()
     if len(sys.argv) == 2 and sys.argv[1] == "-c":
