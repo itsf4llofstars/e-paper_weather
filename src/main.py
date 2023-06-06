@@ -50,10 +50,17 @@ def get_metar(filename) -> str:
             return metar
 
 
+def get_day_time(metar):
+    """KALN 052023Z """
+    return metar[5:12]
+
+
 def main():
     metar_file = os.path.expanduser(os.path.join("~", "python", "metar_parser", "metar.txt"))
     curr_metar = get_metar(metar_file)
+    day_time = get_day_time(curr_metar)
     print(f"{curr_metar}")
+    print(f"{day_time}")
 
     epd = epd4in2.EPD()
     if len(sys.argv) == 2 and sys.argv[1] == "-c":
