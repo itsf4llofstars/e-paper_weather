@@ -8,6 +8,7 @@ import logging
 import os
 import re
 import sys
+
 # import time
 # import traceback
 
@@ -54,10 +55,11 @@ def get_station(metar):
 
 
 def get_day_time(metar):
-    """KALN 052023Z """
+    """KALN 052023Z"""
     return metar[5:12]
 
 
+# !Need to parse VRB05KT
 def get_winds(metar):
     winds = re.compile(r"\s\d{5}(G\d{2})?KT\s")
     wind_dir_sp = re.search(winds, metar)
@@ -73,7 +75,9 @@ def parse_wind(winds_str):
 
 
 def main():
-    metar_file = os.path.expanduser(os.path.join("~", "python", "metar_parser", "metar.txt"))
+    metar_file = os.path.expanduser(
+        os.path.join("~", "python", "metar_parser", "metar.txt")
+    )
     curr_metar = get_metar(metar_file)
     # curr_metar = "060050Z 28016G23KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
