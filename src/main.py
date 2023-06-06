@@ -64,20 +64,31 @@ def get_winds(metar):
     return wind_dir_sp.group().strip()
 
 
+def parse_wind(winds_str):
+    dir = winds_str[0:3]
+    speed = winds_str[3:5]
+    if "G" in winds_str:
+        return int(dir), int(speed), True
+    return int(dir), int(speed), False
+
+
 def main():
     metar_file = os.path.expanduser(os.path.join("~", "python", "metar_parser", "metar.txt"))
-    curr_metar = get_metar(metar_file)
+    # curr_metar = get_metar(metar_file)
+    curr_metar = "060050Z 28016G23KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
     winds = get_winds(curr_metar)
+    wind_dir, wind_sp, gusty = parse_wind(winds)
 
-    # KALN 060050Z 36003KT 10SM CLR 24/08 A2999
+    # KALN 060050Z 37013KT 10SM CLR 24/08 A2999
     # KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999
 
     print(f"{station}")
     print(f"{curr_metar}")
     print(f"{day_time}")
     print(f"{winds}")
+    print(f"{wind_dir} {wind_sp} {gusty}")
 
     epd = epd4in2.EPD()
     if len(sys.argv) == 2 and sys.argv[1] == "-c":
