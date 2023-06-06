@@ -44,7 +44,7 @@ def get_metar(filename) -> str:
     except FileNotFoundError as fnfe:
         print(f"{fnfe}")
     else:
-        metar = metars[-1]
+        metar = metars[-1].strip()
     finally:
         if metar is not None:
             return metar
