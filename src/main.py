@@ -105,7 +105,9 @@ def main():
     day_time = get_day_time(curr_metar)
     winds = get_winds(curr_metar)
     wind_dir, wind_sp, gusty, variable = parse_wind(winds)
-    wind_cardinal = get_cardinal(wind_dir, wind_sp)
+
+    if not variable:
+        wind_cardinal = get_cardinal(wind_dir, wind_sp)
 
     # KALN 060050Z 37013KT 10SM CLR 24/08 A2999
     # KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999
