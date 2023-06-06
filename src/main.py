@@ -74,12 +74,24 @@ def parse_wind(winds_str):
 
 def main():
     metar_file = os.path.expanduser(os.path.join("~", "python", "metar_parser", "metar.txt"))
-    # curr_metar = get_metar(metar_file)
-    curr_metar = "060050Z 28016G23KT 10SM CLR 24/08 A2999"
+    curr_metar = get_metar(metar_file)
+    # curr_metar = "060050Z 28016G23KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
     winds = get_winds(curr_metar)
     wind_dir, wind_sp, gusty = parse_wind(winds)
+
+    cardinal = ""
+    if wind_sp == 0:
+        cardinal = "Calm"
+    elif 1 < wind_dir <= 40 or 310 < wind_dir <= 360:
+        cardinal = "N"
+    elif 40 < wind_dir <= 130:
+        cardinal = "E"
+    elif 120 < wind_dir <= 220:
+        cardinal = "S"
+    elif 220 < wind_dir <= 310:
+        cardinal = "W"
 
     # KALN 060050Z 37013KT 10SM CLR 24/08 A2999
     # KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999
@@ -88,7 +100,7 @@ def main():
     print(f"{curr_metar}")
     print(f"{day_time}")
     print(f"{winds}")
-    print(f"{wind_dir} {wind_sp} {gusty}")
+    print(f"{cardinal} {wind_dir} {wind_sp} {gusty}")
 
     epd = epd4in2.EPD()
     if len(sys.argv) == 2 and sys.argv[1] == "-c":
