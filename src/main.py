@@ -59,9 +59,13 @@ def get_day_time(metar):
     return metar[5:12]
 
 
-# !Need to parse VRB05KT
 def get_winds(metar):
-    winds = re.compile(r"\s\d{5}(G\d{2})?KT\s")
+    if "G" in metar:
+        winds = re.compile(r"\s\d{5}G\d{2}KT\s")
+    elif "VRB" in metar:
+        winds = re.compile(r"\sVRB\d{2}KT\s")
+    else:
+        winds = re.compile(r"\s\d{5}KT\s")
     wind_dir_sp = re.search(winds, metar)
     return wind_dir_sp.group().strip()
 
@@ -78,11 +82,14 @@ def main():
     metar_file = os.path.expanduser(
         os.path.join("~", "python", "metar_parser", "metar.txt")
     )
-    curr_metar = get_metar(metar_file)
-    # curr_metar = "060050Z 28016G23KT 10SM CLR 24/08 A2999"
+    # curr_metar = get_metar(metar_file)
+    curr_metar = "060050Z 26016G26KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
     winds = get_winds(curr_metar)
+    print(f"{winds}")
+
+    sys.exit()
     wind_dir, wind_sp, gusty = parse_wind(winds)
 
     cardinal = ""
