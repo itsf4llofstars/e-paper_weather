@@ -61,7 +61,7 @@ def get_day_time(metar):
 def get_winds(metar):
     winds = re.compile(r"\s\d{5}(G\d{2})?KT\s")
     wind_dir_sp = re.search(winds, metar)
-    return wind_dir_sp.group()
+    return wind_dir_sp.group().strip()
 
 
 def main():
