@@ -73,9 +73,13 @@ def get_winds(metar):
 def parse_wind(winds_str):
     dir = winds_str[0:3]
     speed = winds_str[3:5]
-    if "G" in winds_str:
-        return int(dir), int(speed), True
-    return int(dir), int(speed), False
+
+    if "VRB" in wind_str:
+        return 0, int(speed), False, True
+    elif "G" in winds_str:
+        return int(dir), int(speed), True, False
+
+    return int(dir), int(speed), False, False
 
 
 def main():
@@ -87,7 +91,7 @@ def main():
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
     winds = get_winds(curr_metar)
-    wind_dir, wind_sp, gusty = parse_wind(winds)
+    wind_dir, wind_sp, gusty, variable = parse_wind(winds)
 
     cardinal = ""
     if wind_sp == 0:
