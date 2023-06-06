@@ -8,11 +8,10 @@ import logging
 import os
 import re
 import sys
+import time
+import traceback
 
-# import time
-# import traceback
-
-# from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 picdir = ""
 libdir = ""
@@ -95,28 +94,27 @@ def get_cardinal(wind_dir, wind_sp):
         return "W"
 
 
+def get_vis(metar_str):
+    return re.search(r"\s\d{2}SM\s", metar_str).group().strip()
+
+
 def main():
     metar_file = os.path.expanduser(
         os.path.join("~", "python", "metar_parser", "metar.txt")
     )
-    # curr_metar = get_metar(metar_file)
-    curr_metar = "060050Z 18015KT 10SM CLR 24/08 A2999"
+    curr_metar = get_metar(metar_file)
+    # curr_metar = "060050Z 18015KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
     winds = get_winds(curr_metar)
     wind_dir, wind_sp, gusty, variable = parse_wind(winds)
-
-    if not variable:
-        wind_cardinal = get_cardinal(wind_dir, wind_sp)
-
-    # KALN 060050Z 37013KT 10SM CLR 24/08 A2999
-    # KALN 060050Z 19017G24KT 10SM CLR 24/08 A2999
-
-    print(f"{station}")
-    print(f"{curr_metar}")
-    print(f"{day_time}")
-    print(f"{winds}")
-    print(f"{wind_cardinal} {wind_dir} {wind_sp} {gusty} {variable}")
+    visibility = get_vis(curr_metar)
+    print(f"{station = }")
+    print(f"{day_time = }")
+    print(f"{winds = }")
+    print(f"{wind_dir = }")
+    print(f"{wind_sp = }")
+    print(f"{visibility  = }")
 
     epd = epd4in2.EPD()
     if len(sys.argv) == 2 and sys.argv[1] == "-c":
@@ -124,7 +122,6 @@ def main():
         epd.Clear()
         epd.sleep()
         sys.exit()
-    """
     try:
         epd = epd4in2.EPD()
 
@@ -167,7 +164,6 @@ def main():
         logging.info("ctrl + c:")
         epd4in2.epdconfig.module_exit()
         exit()
-        """
 
 
 if __name__ == "__main__":
