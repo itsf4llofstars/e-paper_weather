@@ -82,14 +82,11 @@ def main():
     metar_file = os.path.expanduser(
         os.path.join("~", "python", "metar_parser", "metar.txt")
     )
-    # curr_metar = get_metar(metar_file)
-    curr_metar = "060050Z 26016G26KT 10SM CLR 24/08 A2999"
+    curr_metar = get_metar(metar_file)
+    # curr_metar = "060050Z 26016G26KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
     day_time = get_day_time(curr_metar)
     winds = get_winds(curr_metar)
-    print(f"{winds}")
-
-    sys.exit()
     wind_dir, wind_sp, gusty = parse_wind(winds)
 
     cardinal = ""
