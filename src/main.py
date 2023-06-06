@@ -51,6 +51,14 @@ def get_metar(filename) -> str:
 
 
 def main():
+    metar_file = os.path.expanduser(os.path.join("~", "python", "metar_parser", "metar.txt"))
+
+    epd = epd4in2.EPD()
+    if len(sys.argv) == 2 and sys.argv[1] == "-c":
+        epd.init()
+        epd.Clear()
+        epd.sleep()
+        sys.exit()
     """
     try:
         epd = epd4in2.EPD()
