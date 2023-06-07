@@ -51,9 +51,11 @@ def get_metar(filename) -> str:
 
 def get_station(metar):
     return re.search(r"^K\w{3}\s", metar).group().strip()
-    # station_re = re.compile(r"^K\w{3}\s")
-    # station_id = re.search(station_re, metar)
-    # print(f"{station_id}")
+
+
+def get_day_time(metar):
+    day_zulu = re.search(r"\s\d{6}Z\s", metar).group().strip()
+    return day_zulu[:2], day_zulu[2:6]
 
 
 def main():
@@ -64,6 +66,8 @@ def main():
     # curr_metar = "KALN 061350Z 18015KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
     print(f"{station}")
+    day, time_zulu = get_day_time(curr_metar)
+    print(f"{day} {time_zulu}")
     day = curr_metar[5:7]
     hour = curr_metar[7:11]
 
