@@ -16,7 +16,6 @@ from PIL import Image, ImageDraw, ImageFont
 # import time
 # import traceback
 
-
 picdir = ""
 libdir = ""
 
@@ -108,7 +107,6 @@ def main():
         os.path.join("~", "python", "metar_parser", "metar.txt")
     )
     curr_metar = get_metar(metar_file)
-    # curr_metar = "KALN 061350Z 18015KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
     day, time_zulu = get_day_time(curr_metar)
     wind_dir, wind_speed = get_winds(curr_metar)
@@ -127,12 +125,6 @@ def main():
 
     try:
         epd = epd4in2.EPD()
-
-        if len(sys.argv) == 2 and sys.argv[1] == "-c":
-            epd.init()
-            epd.Clear()
-            epd.sleep()
-            sys.exit()
 
         epd.init()
         epd.Clear()
