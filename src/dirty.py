@@ -90,7 +90,11 @@ def get_temp(metar):
     else:
         temp = temp[:2]
     print(temp)
-    return int((float(temp) * 1.8) + 32.0)
+
+
+def get_baro(metar):
+    baro = re.search(r"\sA\d{4}$", metar).group().strip()
+    return f"{baro[1:3]}.{baro[3:5]} in/Hg"
 
 
 def main():
@@ -111,35 +115,8 @@ def main():
     print(f"{sky_condition}")
     temp_f = get_temp(curr_metar)
     print(f"{temp_f}")
-    day = curr_metar[5:7]
-    hour = curr_metar[7:11]
-
-    winds = ""
-    if "VRB" in curr_metar:
-        winds = re.search(r"\sVRB\d{2}KT", curr_metar).group().strip()
-    elif "G" in curr_metar:
-        winds = re.search(r"\s\d{5}G\d{2}KT", curr_metar).group().strip()
-    else:
-        winds = re.search(r"\s\d{5}KT", curr_metar).group().strip()
-
-    wind_dir, wind_sp, wind_str = "", "", ""
-    if "G" in curr_metar:
-        wind_dir = winds[:3]
-        wind_sp = winds[3:5]
-        wind_str = f"{wind_dir} at {wind_sp} KTS, GUSTING"
-    elif "VRB" in curr_metar:
-        wind_dir = "VARIABLE at"
-        wind_sp = f"{wind_sp} KNOTS"
-        wind_str = f"{wind_dir} {wind_sp}"
-    else:
-        wind_str = f"{winds[:3]} at {winds[3:5]} KNOTS"
-
-    wind_str = "WINDS: " + wind_str
-
-    # visibility = re.search(r"\s\d{2}SM\s", curr_metar).group().strip()
-    # visibility = f"VISIBILITY: {visibility[:2]} MILES"
-
-    baro = f"BAROMETER: {curr_metar[-4:-2]}.{curr_metar[-2:]} in/Hg"
+    barometer = get_baro(curr_metar)
+    print(f"{barometer}")
 
     clouds = """      .-----.
      (        ).
