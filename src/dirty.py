@@ -49,13 +49,21 @@ def get_metar(filename) -> str:
             return metar
 
 
+def get_station(metar):
+    return re.search(r"^K\w{3}\s", metar).group().strip()
+    # station_re = re.compile(r"^K\w{3}\s")
+    # station_id = re.search(station_re, metar)
+    # print(f"{station_id}")
+
+
 def main():
     metar_file = os.path.expanduser(
         os.path.join("~", "python", "metar_parser", "metar.txt")
     )
     curr_metar = get_metar(metar_file)
     # curr_metar = "KALN 061350Z 18015KT 10SM CLR 24/08 A2999"
-    station = curr_metar[:4]
+    station = get_station(curr_metar)
+    print(f"{station}")
     day = curr_metar[5:7]
     hour = curr_metar[7:11]
 
@@ -81,8 +89,8 @@ def main():
 
     wind_str = "WINDS: " + wind_str
 
-    visibility = re.search(r"\s\d{2}SM\s", curr_metar).group().strip()
-    visibility = f"VISIBILITY: {visibility[:2]} MILES"
+    # visibility = re.search(r"\s\d{2}SM\s", curr_metar).group().strip()
+    # visibility = f"VISIBILITY: {visibility[:2]} MILES"
 
     baro = f"BAROMETER: {curr_metar[-4:-2]}.{curr_metar[-2:]} in/Hg"
 
@@ -92,7 +100,7 @@ def main():
     * * * * *
      * * * * *
 """
-
+    sys.exit()
     try:
         epd = epd4in2.EPD()
 
