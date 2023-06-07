@@ -146,12 +146,12 @@ def main():
         metar_wx = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(metar_wx)
         draw.text((10, 0), station, font=font36, fill=0)
-        draw.text((10, 50), f"June {day} {time_zulu}Z", font=font18, fill=0)
-        draw.text((10, 75), f"{wind_dir} at {wind_speed} KNOTS", font=font18, fill=0)
-        draw.text((10, 100), visibility, font=font18, fill=0)
-        draw.text((10, 125), sky_condition, font=font18, fill=0)
-        draw.text((10, 150), f"{temp_f} F", font=font18, fill=0)
-        draw.text((10, 175), barometer, font=font18, fill=0)
+        draw.text((10, 50), f"June {day} {time_zulu}Z", font=font20, fill=0)
+        draw.text((10, 75), f"{wind_dir} at {wind_speed} KNOTS", font=font20, fill=0)
+        draw.text((10, 100), visibility, font=font20, fill=0)
+        draw.text((10, 125), sky_condition, font=font20, fill=0)
+        draw.text((10, 150), f"{temp_f} F", font=font20, fill=0)
+        draw.text((10, 175), barometer, font=font20, fill=0)
 
         if "RA" in curr_metar:
             draw.text((10, 200), "Rain", font=font20, fill=0)
