@@ -58,6 +58,14 @@ def get_day_time(metar):
     return day_zulu[:2], day_zulu[2:6]
 
 
+def get_winds(metar):
+    winds = ""
+    if "VRB" in metar:
+        winds = re.search(r"\sVRB\d{2}KT\s", metar)
+    winds = re.search(r"\s\d{5}(G\d{2})?KT\s", metar).group().strip()
+    return winds[:3], winds[3:5]
+
+
 def main():
     metar_file = os.path.expanduser(
         os.path.join("~", "python", "metar_parser", "metar.txt")
@@ -68,6 +76,8 @@ def main():
     print(f"{station}")
     day, time_zulu = get_day_time(curr_metar)
     print(f"{day} {time_zulu}")
+    wind_dir, wind_speed = get_winds(curr_metar)
+    print(f"{wind_dir}, {wind_speed}")
     day = curr_metar[5:7]
     hour = curr_metar[7:11]
 
