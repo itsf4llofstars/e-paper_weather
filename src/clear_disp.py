@@ -27,7 +27,6 @@ from waveshare_epd import epd4in2
 
 logging.basicConfig(level=logging.DEBUG)
 
-
 try:
     epd = epd4in2.EPD()
 
