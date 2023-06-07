@@ -2,6 +2,10 @@
 # -*- coding:utf-8 -*-
 import os
 import sys
+import logging
+import time
+import traceback
+from PIL import Image, ImageDraw, ImageFont
 
 picdir = os.path.join(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "pic"
@@ -12,11 +16,6 @@ libdir = os.path.join(
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
-import logging
-import time
-import traceback
-
-from PIL import Image, ImageDraw, ImageFont
 from waveshare_epd import epd4in2
 
 logging.basicConfig(level=logging.DEBUG)
