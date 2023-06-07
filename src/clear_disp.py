@@ -6,12 +6,13 @@ Description: Clears and sleeps the display
 """
 import logging
 import os
-import re
 import sys
-import time
-import traceback
 
 from PIL import Image, ImageDraw, ImageFont
+
+# import time
+# import traceback
+
 
 picdir = os.path.join(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "pic"
