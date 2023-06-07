@@ -8,10 +8,12 @@ import logging
 import os
 import re
 import sys
+
+from PIL import Image, ImageDraw, ImageFont
+
 # import time
 # import traceback
 
-from PIL import Image, ImageDraw, ImageFont
 
 picdir = ""
 libdir = ""
@@ -85,11 +87,13 @@ def get_sky(metar):
 
 def get_temp(metar):
     temp = re.search(r"\sM?\d{2}\/M?\d{2}\s", metar).group().strip()
+
     if "M" in temp:
         temp = temp[1:3]
     else:
         temp = temp[:2]
-    print(temp)
+
+    return int((float(temp) * 1.8) + 32.0)
 
 
 def get_baro(metar):
@@ -107,8 +111,9 @@ def main():
     day, time_zulu = get_day_time(curr_metar)
     wind_dir, wind_speed = get_winds(curr_metar)
     visibility = get_vis(curr_metar)
+    visibility += " Miles"
     sky_condition = get_sky(curr_metar)
-    temp_f = get_temp(curr_metar)
+    temp_f = str(get_temp(curr_metar))
     barometer = get_baro(curr_metar)
 
     clouds = """      .-----.
@@ -117,7 +122,7 @@ def main():
     * * * * *
      * * * * *
 """
-    sys.exit()
+
     try:
         epd = epd4in2.EPD()
 
@@ -145,8 +150,12 @@ def main():
         draw.text((10, 75), f"{wind_dir} at {wind_speed} KNOTS", font=font18, fill=0)
         draw.text((10, 100), visibility, font=font18, fill=0)
         draw.text((10, 125), sky_condition, font=font18, fill=0)
-        draw.text((10, 125), f"{temp_f} F", font=font18, fill=0)
-        draw.text((10, 125), barometer, font=font18, fill=0)
+        draw.text((10, 150), f"{temp_f} F", font=font18, fill=0)
+        draw.text((10, 175), barometer, font=font18, fill=0)
+
+        if "RA" in curr_metar:
+            draw.text((10, 200), "Rain", font=font20, fill=0)
+
         # draw.text((10, 150), clouds, font=font22, fill=0)
         epd.display(epd.getbuffer(metar_wx))
 
