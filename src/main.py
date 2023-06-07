@@ -8,8 +8,8 @@ import logging
 import os
 import re
 import sys
-import time
-import traceback
+# import time
+# import traceback
 
 from PIL import Image, ImageDraw, ImageFont
 
