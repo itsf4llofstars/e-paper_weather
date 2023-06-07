@@ -66,6 +66,13 @@ def get_winds(metar):
     return winds[:3], winds[3:5]
 
 
+def get_vis(metar):
+    return re.search(r"\s[0-9]?[0-9]SM\s", metar).group().strip()[:-2]
+
+
+
+
+
 def main():
     metar_file = os.path.expanduser(
         os.path.join("~", "python", "metar_parser", "metar.txt")
@@ -78,6 +85,8 @@ def main():
     print(f"{day} {time_zulu}")
     wind_dir, wind_speed = get_winds(curr_metar)
     print(f"{wind_dir}, {wind_speed}")
+    visibility = get_vis(curr_metar)
+    print(visibility)
     day = curr_metar[5:7]
     hour = curr_metar[7:11]
 
