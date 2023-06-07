@@ -54,8 +54,44 @@ def main():
         os.path.join("~", "python", "metar_parser", "metar.txt")
     )
     curr_metar = get_metar(metar_file)
-    # curr_metar = "060050Z 18015KT 10SM CLR 24/08 A2999"
+    # curr_metar = "KALN 061350Z 18015KT 10SM CLR 24/08 A2999"
     station = curr_metar[:4]
+    day = curr_metar[5:7]
+    hour = curr_metar[7:11]
+
+    winds = ""
+    if "VRB" in curr_metar:
+        winds = re.search(r"\sVRB\d{2}KT", curr_metar).group().strip()
+    elif "G" in curr_metar:
+        winds = re.search(r"\s\d{5}G\d{2}KT", curr_metar).group().strip()
+    else:
+        winds = re.search(r"\s\d{5}KT", curr_metar).group().strip()
+
+    wind_dir, wind_sp, wind_str = "", "", ""
+    if "G" in curr_metar:
+        wind_dir = winds[:3]
+        wind_sp = winds[3:5]
+        wind_str = f"{wind_dir} at {wind_sp} KTS, GUSTING"
+    elif "VRB" in curr_metar:
+        wind_dir = "VARIABLE at"
+        wind_sp = f"{wind_sp} KNOTS"
+        wind_str = f"{wind_dir} {wind_sp}"
+    else:
+        wind_str = f"{winds[:2]} at {winds[3:5]} KNOTS"
+
+    wind_str = "WINDS: " + wind_str
+
+    visibility = re.search(r"\s\d{2}SM\s", curr_metar).group().strip()
+    visibility = f"VISIBILITY: {visibility[:2]} MILES"
+
+    baro = f"BAROMETER: {curr_metar[-4:-2]}.{curr_metar[-2:]} in/Hg"
+
+    clouds = """      .-----.
+     (        ).
+    (_____)___)
+    * * * * *
+     * * * * *
+"""
 
     try:
         epd = epd4in2.EPD()
@@ -80,6 +116,11 @@ def main():
         metar_wx = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(metar_wx)
         draw.text((10, 0), station, font=font36, fill=0)
+        draw.text((10, 50), f"June {day} {hour}Z", font=font20, fill=0)
+        draw.text((10, 75), wind_str, font=font20, fill=0)
+        draw.text((10, 100), visibility, font=font20, fill=0)
+        draw.text((10, 125), baro, font=font20, fill=0)
+        draw.text((10, 150), clouds, font=font22, fill=0)
         epd.display(epd.getbuffer(metar_wx))
 
         # epd.Clear()
