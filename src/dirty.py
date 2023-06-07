@@ -2,6 +2,8 @@
 """
 File: main.py
 Author: itsf4llofstarts
+Version: 0.1.0
+Release: 1
 Description: Weather text and ascii displayd on e-paper
 """
 import logging
