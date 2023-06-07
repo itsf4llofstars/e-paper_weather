@@ -120,7 +120,7 @@ def main():
         draw.text((10, 75), wind_str, font=font20, fill=0)
         draw.text((10, 100), visibility, font=font20, fill=0)
         draw.text((10, 125), baro, font=font20, fill=0)
-        draw.text((10, 150), clouds, font=font22, fill=0)
+        # draw.text((10, 150), clouds, font=font22, fill=0)
         epd.display(epd.getbuffer(metar_wx))
 
         # epd.Clear()
