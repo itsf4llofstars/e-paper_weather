@@ -13,26 +13,19 @@ import traceback
 
 from PIL import Image, ImageDraw, ImageFont
 
-picdir = ""
-libdir = ""
+picdir = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "pic"
+)
+libdir = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "lib"
+)
 
-try:
-    picdir = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "pic"
-    )
-    libdir = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.realpath(__file__))), "lib"
-    )
+if os.path.exists(libdir):
+    sys.path.append(libdir)
 
-    if os.path.exists(libdir):
-        sys.path.append(libdir)
+from waveshare_epd import epd4in2
 
-    from waveshare_epd import epd4in2
-
-    logging.basicConfig(level=logging.DEBUG)
-except ImportError as ie:
-    print(f"{ie}")
-    sys.exit()
+logging.basicConfig(level=logging.DEBUG)
 
 
 try:
@@ -41,10 +34,11 @@ try:
     epd.init()
     epd.Clear()
     epd.sleep()
-    sys.exit()
 except IOError as e:
     logging.info(e)
 except KeyboardInterrupt:
     logging.info("ctrl + c:")
     epd4in2.epdconfig.module_exit()
     exit()
+
+sys.exit()
