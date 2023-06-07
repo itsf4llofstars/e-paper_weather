@@ -8,8 +8,8 @@ import logging
 import os
 import re
 import sys
-import time
-import traceback
+# import time
+# import traceback
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -104,19 +104,12 @@ def main():
     curr_metar = get_metar(metar_file)
     # curr_metar = "KALN 061350Z 18015KT 10SM CLR 24/08 A2999"
     station = get_station(curr_metar)
-    print(f"{station}")
     day, time_zulu = get_day_time(curr_metar)
-    print(f"{day} {time_zulu}")
     wind_dir, wind_speed = get_winds(curr_metar)
-    print(f"{wind_dir}, {wind_speed}")
     visibility = get_vis(curr_metar)
-    print(visibility)
     sky_condition = get_sky(curr_metar)
-    print(f"{sky_condition}")
     temp_f = get_temp(curr_metar)
-    print(f"{temp_f}")
     barometer = get_baro(curr_metar)
-    print(f"{barometer}")
 
     clouds = """      .-----.
      (        ).
@@ -148,10 +141,12 @@ def main():
         metar_wx = Image.new("1", (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(metar_wx)
         draw.text((10, 0), station, font=font36, fill=0)
-        draw.text((10, 50), f"June {day} {hour}Z", font=font20, fill=0)
-        draw.text((10, 75), wind_str, font=font20, fill=0)
-        draw.text((10, 100), visibility, font=font20, fill=0)
-        draw.text((10, 125), baro, font=font20, fill=0)
+        draw.text((10, 50), f"June {day} {time_zulu}Z", font=font18, fill=0)
+        draw.text((10, 75), f"{wind_dir} at {wind_speed} KNOTS", font=font18, fill=0)
+        draw.text((10, 100), visibility, font=font18, fill=0)
+        draw.text((10, 125), sky_condition, font=font18, fill=0)
+        draw.text((10, 125), f"{temp_f} F", font=font18, fill=0)
+        draw.text((10, 125), barometer, font=font18, fill=0)
         # draw.text((10, 150), clouds, font=font22, fill=0)
         epd.display(epd.getbuffer(metar_wx))
 
