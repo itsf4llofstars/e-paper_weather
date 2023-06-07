@@ -70,7 +70,27 @@ def get_vis(metar):
     return re.search(r"\s[0-9]?[0-9]SM\s", metar).group().strip()[:-2]
 
 
+def get_sky(metar):
+    if "CLR" in metar:
+        return "CLEAR"
+    elif "OVC" in metar:
+        return "OVERCAST"
+    elif "BKN" in metar:
+        return "BROKEN"
+    elif "SCT" in metar:
+        return "SCATTERED"
+    else:
+        return "NO SKY"
 
+
+def get_temp(metar):
+    temp = re.search(r"\sM?\d{2}\/M?\d{2}\s", metar).group().strip()
+    if "M" in temp:
+        temp = temp[1:3]
+    else:
+        temp = temp[:2]
+    print(temp)
+    return int((float(temp) * 1.8) + 32.0)
 
 
 def main():
@@ -87,6 +107,10 @@ def main():
     print(f"{wind_dir}, {wind_speed}")
     visibility = get_vis(curr_metar)
     print(visibility)
+    sky_condition = get_sky(curr_metar)
+    print(f"{sky_condition}")
+    temp_f = get_temp(curr_metar)
+    print(f"{temp_f}")
     day = curr_metar[5:7]
     hour = curr_metar[7:11]
 
