@@ -77,7 +77,7 @@ def main():
         wind_sp = f"{wind_sp} KNOTS"
         wind_str = f"{wind_dir} {wind_sp}"
     else:
-        wind_str = f"{winds[:2]} at {winds[3:5]} KNOTS"
+        wind_str = f"{winds[:3]} at {winds[3:5]} KNOTS"
 
     wind_str = "WINDS: " + wind_str
 
